@@ -69,3 +69,91 @@ Windows 2012 non-R2 v1.0.0 (at least 1 revision old): https://goo.gl/SSHmrd
 Microsoft SQL 2014 v1.1.0 (1 revision old): https://goo.gl/UDalt9 
 Microsoft SQL 2012 v1.0.0 (at least 1 revision old): https://goo.gl/KZyhUz 
 Microsoft IIS 8 v1.4.0 (1 revision old): https://goo.gl/NIQxzk
+
+
+
+
+iptables firewall
+
+
+# KAA
+#!/bin/bash 
+Iptables --flush 
+iptables -P INPUT DROP 
+iptables -P FORWARD DROP 
+iptables -P OUTPUT ACCEPT 
+ 
+iptables -A INPUT -i lo -j ACCEPT 
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT 
+ 
+# allow icmp 
+Iptables –A INPUT –p icmp –j ACCEPT 
+ 
+# allow ssh, http, and https  traffic from  
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport ssh -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport http -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport 8080 -j ACCEPT 
+ 
+ 
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport ssh -j ACCEPT 
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport http -j ACCEPT 
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport 8080 -j ACCEPT
+
+
+
+# GITLAB
+#!/bin/bash 
+Iptables --flush 
+iptables -P INPUT DROP 
+iptables -P FORWARD DROP 
+iptables -P OUTPUT ACCEPT 
+ 
+iptables -A INPUT -i lo -j ACCEPT 
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT 
+ 
+# allow icmp 
+Iptables –A INPUT –p icmp –j ACCEPT 
+ 
+# allow ssh, http, and https  traffic from  
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport ssh -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport http -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport 12320 -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport 12321 -j ACCEPT 
+ 
+ 
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport ssh -j ACCEPT 
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport http -j ACCEPT 
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport 12320 -j ACCEPT
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport 12321 -j ACCEPT
+
+
+
+# ELK
+#!/bin/bash 
+Iptables --flush 
+iptables -P INPUT DROP 
+iptables -P FORWARD DROP 
+iptables -P OUTPUT ACCEPT 
+ 
+iptables -A INPUT -i lo -j ACCEPT 
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT 
+ 
+# allow icmp 
+Iptables –A INPUT –p icmp –j ACCEPT 
+ 
+# allow ssh, http, and https  traffic from  
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport ssh -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport http -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport 5601 -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport 9200 -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport 20 -j ACCEPT 
+iptables -A INPUT -p tcp -s XXX.XXX.XXX.XXX --dport 21 -j ACCEPT 
+ 
+ 
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport ssh -j ACCEPT 
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport http -j ACCEPT 
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport 5601 -j ACCEPT
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport 9200 -j ACCEPT
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport 20 -j ACCEPT
+iptables -A OUTPUT -p tcp -d XXX.XXX.XXX.XXX --dport 21 -j ACCEPT
+
