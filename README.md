@@ -73,6 +73,37 @@ Microsoft IIS 8 v1.4.0 (1 revision old): https://goo.gl/NIQxzk
 
 
 
+ 
+ 
+https://technet.microsoft.com/en-us/library/jj573828(v=wps.630).aspx 
+https://technet.microsoft.com/en-us/library/hh831755(v=ws.11).aspx 
+ 
+Get-NetFirewallProfile –Name Domain 
+ 
+Set-NetFirewallProfile –Name Domain –LogAllowed True 
+ 
+Set-NetFirewallRule –Direction Inbound  
+ 
+Set-NetFirewallProfile -DefaultInboundAction Block –DefaultOutboundAction Block –NotifyOnListen True –LogFileName %SystemRoot%\System32\LogFiles\Firewall\pfirewall.log 
+ 
+Allow Ping Inbound: 
+New-NetFirewallRule -Name Allow_Ping -DisplayName “Allow Ping” -Protocol ICMPv4 -IcmpType 8 -Profile Any -Action Allow 
+ 
+Allow All Inbound from Specified IPs: 
+New-NetFirewallRule –Name Allow_All_Inbound -DisplayName "Allow All Inbound" -Direction Inbound –Action Allow –Protocol Any –RemoteAddress @("192.168.1.1","10.0.0.1") 
+ 
+*NEEDS WORK* 
+Allow IE Outbound: 
+New-NetFirewallRule -Name Allow_IE_Outbound –DisplayName "Allow IE Outbound"" -Direction Outbound –Program "C:\Program Files\Internet Explorer\iexplore.exe" –Action Allow –Port 80,443 –Protocol TCP 
+ 
+Allow DNS? 
+Does downloading and etc. need other ports or protocols? 
+ 
+ 
+ 
+
+
+
 iptables firewall
 
 
